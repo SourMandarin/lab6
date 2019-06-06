@@ -1,0 +1,541 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <iomanip>
+#include <locale.h>
+#include <Windows.h>
+#include <cstring>
+#include <string>
+#include <cmath>
+#include <fstream>
+#include <stdlib.h>
+
+
+using namespace std;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//			СТРУКТУРЫ			СТРУКТУРЫ			СТРУКТУРЫ			СТРУКТУРЫ			СТРУКТУРЫ			СТРУКТУРЫ			СТРУКТУРЫ
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct fio
+{
+	char* firstN;
+	char* lastN;
+};
+
+struct date
+{
+	int numb;
+	char* mon;
+	int year;
+};
+
+struct car
+{
+	char* mark;
+	fio fio;
+	int pow;
+	int mil;
+	date date;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//			 ФУНКЦИИ			 ФУНКЦИИ			 ФУНКЦИИ			 ФУНКЦИИ			 ФУНКЦИИ			 ФУНКЦИИ			 ФУНКЦИИ
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+car add_car()
+{
+	car info;
+	info.mark = new char[256];
+	cout << endl << '\t' << "Введите марку машины: ";
+	cin >> info.mark;
+
+	info.fio.firstN = new char[256];
+	info.fio.lastN = new char[256];
+	cout << endl << endl << '\t' << "Введите имя фамилию владельца: "<<endl<<'\t';
+	cin >> info.fio.firstN;
+	cout << endl<<'\t';
+	cin >> info.fio.lastN;
+
+	info.pow = 0;
+	cout << endl << endl << '\t' << "Введите мощность двигателя: ";
+	cin >> info.pow;
+
+	info.mil = 0;
+	cout << endl << endl << '\t' << "Введите пробег: ";
+	cin >> info.mil;
+
+	cout << endl << endl << '\t' << "Введите дату ТО: " << endl;
+
+	info.date.numb = 0;
+	cout << endl << endl << '\t' << "Введите число: ";
+	cin >> info.date.numb;
+
+	info.date.mon = new char[256];
+	cout << endl << endl << '\t' << "Введите месяц (словом): ";
+	cin >> info.date.mon;
+
+	info.date.year = 0;
+	cout << endl << endl << '\t' << "Введите год: ";
+	cin >> info.date.year;
+
+	return (info);
+}
+
+void print_info(car* info, int size)
+{
+	cout << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+	cout << "|-Марка-| |--Имя--| |-Фамилия-| |-Мощность-| |-Пробег-| |-----Дата TO-----|" << endl;
+	cout << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+
+	for (int i = 0; i < size; i++)
+	{
+
+		cout << "|" << setw(7) << left << info[i].mark << "| ";
+		cout << "|" << setw(7) << left << info[i].fio.firstN << "| ";
+		cout << "|" << setw(9) << left << info[i].fio.lastN << "| ";
+		cout << "|" << setw(10) << left << info[i].pow << "| ";
+		cout << "|" << setw(8) << left << info[i].mil << "| ";
+		cout << "|" << setw(2) << left << info[i].date.numb << setw(1) << left << " " << setw(8) << left << info[i].date.mon << setw(1) << left << " " << setw(5) << left << info[i].date.year << "|";
+
+		cout << endl << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+	}
+}
+
+void find_mark(car* info, int size, char* fmark)
+{
+	cout << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+	cout << "|-Марка-| |--Имя--| |-Фамилия-| |-Мощность-| |-Пробег-| |-----Дата TO-----|" << endl;
+	cout << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+
+	for (int i = 0; i < size; i++)
+	{
+		if (strcmp(info[i].mark, fmark) == 0)
+		{
+			cout << "|" << setw(7) << left << info[i].mark << "| ";
+			cout << "|" << setw(7) << left << info[i].fio.firstN << "| ";
+			cout << "|" << setw(9) << left << info[i].fio.lastN << "| ";
+			cout << "|" << setw(10) << left << info[i].pow << "| ";
+			cout << "|" << setw(8) << left << info[i].mil << "| ";
+			cout << "|" << setw(2) << left << info[i].date.numb << setw(1) << left << " " << setw(8) << left << info[i].date.mon << setw(1) << left << " " << setw(5) << left << info[i].date.year << "|";
+
+			cout << endl << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+		}
+	}
+}
+
+void find_human(car* info, int size, int fmil)
+{
+	cout << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+	cout << "|-Марка-| |--Имя--| |-Фамилия-| |-Мощность-| |-Пробег-| |-----Дата TO-----|" << endl;
+	cout << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+
+	for (int i = 0; i < size; i++)
+	{
+		if (info[i].mil > fmil)
+		{
+			cout << "|" << setw(7) << left << info[i].mark << "| ";
+			cout << "|" << setw(7) << left << info[i].fio.firstN << "| ";
+			cout << "|" << setw(9) << left << info[i].fio.lastN << "| ";
+			cout << "|" << setw(10) << left << info[i].pow << "| ";
+			cout << "|" << setw(8) << left << info[i].mil << "| ";
+			cout << "|" << setw(2) << left << info[i].date.numb << setw(1) << left << " " << setw(8) << left << info[i].date.mon << setw(1) << left << " " << setw(5) << left << info[i].date.year << "|";
+
+			cout << endl << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+		}
+	}
+}
+
+void find_car(car* info, int size, int cday, int cmon, int cyear)
+{
+	cout << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+	cout << "|-Марка-| |--Имя--| |-Фамилия-| |-Мощность-| |-Пробег-| |-----Дата TO-----|" << endl;
+	cout << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+
+	int numm;
+	for (int i = 0; i < size; i++)
+	{
+		if (strcmp(info[i].date.mon, "января") == 0)
+			numm = 1;
+		if (strcmp(info[i].date.mon, "февраля") == 0)
+			numm = 2;
+		if (strcmp(info[i].date.mon, "марта") == 0)
+			numm = 3;
+		if (strcmp(info[i].date.mon, "апреля") == 0)
+			numm = 4;
+		if (strcmp(info[i].date.mon, "мая") == 0)
+			numm = 5;
+		if (strcmp(info[i].date.mon, "июня") == 0)
+			numm = 6;
+		if (strcmp(info[i].date.mon, "июля") == 0)
+			numm = 7;
+		if (strcmp(info[i].date.mon, "августа") == 0)
+			numm = 8;
+		if (strcmp(info[i].date.mon, "сентября") == 0)
+			numm = 9;
+		if (strcmp(info[i].date.mon, "октября") == 0)
+			numm = 10;
+		if (strcmp(info[i].date.mon, "ноября") == 0)
+			numm = 11;
+		if (strcmp(info[i].date.mon, "декабря") == 0)
+			numm = 12;
+
+		int km, ckm;
+		km = info[i].date.year * 12 + numm;
+		ckm = cyear * 12 + cmon;
+		if ((ckm - km <= 18) && (ckm - km >= 0))
+		{
+			if (ckm - km == 18)
+			{
+				if (abs(info[i].date.numb - cday) == 0)
+				{
+					cout << "|" << setw(7) << left << info[i].mark << "| ";
+					cout << "|" << setw(7) << left << info[i].fio.firstN << "| ";
+					cout << "|" << setw(9) << left << info[i].fio.lastN << "| ";
+					cout << "|" << setw(10) << left << info[i].pow << "| ";
+					cout << "|" << setw(8) << left << info[i].mil << "| ";
+					cout << "|" << setw(2) << left << info[i].date.numb << setw(1) << left << " " << setw(8) << left << info[i].date.mon << setw(1) << left << " " << setw(5) << left << info[i].date.year << "|";
+
+					cout << endl << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+				}
+			}
+			else
+			{
+				cout << "|" << setw(7) << left << info[i].mark << "| ";
+				cout << "|" << setw(7) << left << info[i].fio.firstN << "| ";
+				cout << "|" << setw(9) << left << info[i].fio.lastN << "| ";
+				cout << "|" << setw(10) << left << info[i].pow << "| ";
+				cout << "|" << setw(8) << left << info[i].mil << "| ";
+				cout << "|" << setw(2) << left << info[i].date.numb << setw(1) << left << " " << setw(8) << left << info[i].date.mon << setw(1) << left << " " << setw(5) << left << info[i].date.year << "|";
+
+				cout << endl << "|-------| |-------| |---------| |----------| |--------| |-----------------|" << endl;
+			}
+
+		}
+	}
+
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//			  MAIN			 	   MAIN			      MAIN			 	   MAIN			 	   MAIN			 	   MAIN			 	   MAIN
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int main()
+{
+	setlocale(LC_CTYPE, "RUS");
+	SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
+
+	//			ОБЪЯВЛЕНИЕ ПЕРЕМЕННЫХ			//
+
+	int a = 1;
+	int size;
+	char* fmark = new char[256];
+	int fmil;
+	int cnumb, cmon, cyear;
+	int saved_size = 0;
+
+	//////////////////////////////////////////////
+
+
+	FILE *fp;
+	char path[] = "text.txt";
+
+	if ((fp = fopen(path, "r")) == NULL)
+	{
+		cout << endl << '\t' << "Файл не найден" << endl;
+
+		cout << '\t' << "Введите количество машин: ";
+		cin >> size;
+
+		car* info = new car[size];
+
+		//				  ЗАПОЛНЕНИЕ				//
+
+		for (int i = 0; i < size; i++)
+		{
+			info[i].mark = new char[256];
+			cout << endl << '\t' << "Введите марку машины: ";
+			cin >> info[i].mark;
+
+			info[i].fio.firstN = new char[256];
+			info[i].fio.lastN = new char[256];
+			cout << endl << endl << '\t' << "Введите имя фамилию владельца: " << endl << '\t';
+			cin >> info[i].fio.firstN;
+			cout << '\t';
+			cin >> info[i].fio.lastN;
+
+			info[i].pow = 0;
+			cout << endl << endl << '\t' << "Введите мощность двигателя: ";
+			cin >> info[i].pow;
+
+			info[i].mil = 0;
+			cout << endl << endl << '\t' << "Введите пробег: ";
+			cin >> info[i].mil;
+
+			cout << endl << endl << '\t' << "Введите дату ТО: " << endl;
+
+			info[i].date.numb = 0;
+			cout << endl << endl << '\t' << "Введите число: ";
+			cin >> info[i].date.numb;
+
+			info[i].date.mon = new char[256];
+			cout << endl << endl << '\t' << "Введите месяц (словом): ";
+			cin >> info[i].date.mon;
+
+			info[i].date.year = 0;
+			cout << endl << endl << '\t' << "Введите год: ";
+			cin >> info[i].date.year;
+
+		}
+
+		//////////////////////////////////////////////
+
+
+		//			ОБРАЩЕНИЕ К ФУНКЦИЯМ			//
+
+		while (a != 0)
+		{
+			int k;
+			cout << endl << endl << '\t' << "Выберите команду" << endl << endl;
+			cout << '\t' << "1-----Добавить машину" << endl;
+			cout << '\t' << "2-----Распечатать информацию о машине" << endl;
+			cout << '\t' << "3-----Найти все машины  заданной марки" << endl;
+			cout << '\t' << "4-----Найти всех владельцев с пробегом машины больше заданного" << endl;
+			cout << '\t' << "5-----Найти машины, у которых с даты последнего ТО прошло менее" << '\n' << '\t' << "18 месяцев" << endl;
+			cout << '\t' << "0-----Закрыть программу" << endl << endl << '\t' << "Вы ввели: ";
+
+
+			cin >> k;
+
+			cout << endl;
+
+			switch (k)
+			{
+			case(1):
+				size++;
+				info = (car*)realloc(info, sizeof(car)*size);
+				info[size - 1] = add_car();
+				break;
+			case 2:
+				print_info(info, size);
+				break;
+			case 3:
+				cout << endl << "Введите марку: ";
+				cin >> fmark;
+				find_mark(info, size, fmark);
+				cout << endl << endl;
+				break;
+			case 4:
+				cout << endl << "Введите пробег: ";
+				cin >> fmil;
+				find_human(info, size, fmil);
+				cout << endl << endl;
+				break;
+			case 5:
+				cout << endl << '\t' << "Введите сегодняшнюю дату: " << endl << '\t' << "Число: ";
+				cin >> cnumb;
+				cout << endl << '\t' << "Месяц (числом): ";
+				cin >> cmon;
+				cout << endl << '\t' << "Год: ";
+				cin >> cyear;
+				cout << endl;
+				find_car(info, size, cnumb, cmon, cyear);
+				cout << endl << endl;
+				break;
+			case 0:
+				a = 0;
+				break;
+			default:
+				cout << endl << '\t' << "Неверно введена команда" << endl;
+			}
+
+			//		     ЗАПОЛНЕНИЕ ФАЙЛА		     //
+
+			int i;
+			fp = fopen(path, "w+");
+
+			fprintf(fp, "%d", size);
+
+			fprintf(fp, "\n");
+
+
+			for (i = 0; i < size; i++)
+			{
+				fprintf(fp, "%s %s %s %d %d %d %s %d \n ", info[i].mark,
+					info[i].fio.firstN,
+					info[i].fio.lastN,
+					info[i].pow,
+					info[i].mil,
+					info[i].date.numb,
+					info[i].date.mon,
+					info[i].date.year);
+			}
+
+			///////////////////////////////////////////
+		}
+
+		///////////////////////////////////////////////
+
+	}
+	else
+	{
+
+		//			 СЧИТЫВАНИЕ С ФАЙЛА				//
+
+		cout << "Файл существует" << endl;
+
+		//			ОПРЕДЕЛЕНИЕ ДЛИНЫ ТЕКСТА		//
+
+		string text_size;
+		car* info = new car[1];
+		size = 0;
+		int razmer = 0;
+		int i = 0;
+
+		ifstream file("text.txt", ios::in | ios::ate);
+		if (file)
+		{
+			ifstream::streampos filesize = file.tellg();
+			text_size.reserve(filesize);
+			file.seekg(0);
+			razmer = filesize;
+			file.close();
+		}
+
+		///////////////////////////////////////////////
+
+		fscanf(fp, "%d", &size);
+		info = (car*)realloc(info, sizeof(car)*size);
+
+		for (i = 0; i < size; i++)
+		{
+			info[i].mark = new char[256];
+
+			info[i].fio.firstN = new char[256];
+			info[i].fio.lastN = new char[256];
+
+			info[i].pow = 0;
+			info[i].mil = 0;
+
+			info[i].date.numb = 0;
+			info[i].date.mon = new char[256];
+			info[i].date.year = 0;
+
+			fscanf(fp, "%s %s %s %d %d %d %s %d \n ",  info[i].mark,
+				info[i].fio.firstN,
+				info[i].fio.lastN,
+				&info[i].pow,
+				&info[i].mil,
+				&info[i].date.numb,
+				info[i].date.mon,
+				&info[i].date.year);
+		}
+
+		//			ОБРАЩЕНИЕ К ФУНКЦИЯМ			//
+
+		while (a != 0)
+		{
+			int k;
+			cout << endl << endl << '\t' << "Выберите команду" << endl << endl;
+			cout << '\t' << "1-----Добавить машину" << endl;
+			cout << '\t' << "2-----Распечатать информацию о машине" << endl;
+			cout << '\t' << "3-----Найти все машины  заданной марки" << endl;
+			cout << '\t' << "4-----Найти всех владельцев с пробегом машины больше заданного" << endl;
+			cout << '\t' << "5-----Найти машины, у которых с даты последнего ТО прошло менее" << '\n' << '\t' << "18 месяцев" << endl;
+			cout << '\t' << "0-----Закрыть программу" << endl << endl << '\t' << "Вы ввели: ";
+
+
+			cin >> k;
+
+			cout << endl;
+
+			switch (k)
+			{
+			case(1):
+				size++;
+				info = (car*)realloc(info, sizeof(car)*size);
+				info[size - 1] = add_car();
+				break;
+			case 2:
+				print_info(info, size);
+				break;
+			case 3:
+				cout << endl << "Введите марку: ";
+				cin >> fmark;
+				find_mark(info, size, fmark);
+				cout << endl << endl;
+				break;
+			case 4:
+				cout << endl << "Введите пробег: ";
+				cin >> fmil;
+				find_human(info, size, fmil);
+				cout << endl << endl;
+				break;
+			case 5:
+				cout << endl << '\t' << "Введите сегодняшнюю дату: " << endl << '\t' << "Число: ";
+				cin >> cnumb;
+				cout << endl << '\t' << "Месяц (числом): ";
+				cin >> cmon;
+				cout << endl << '\t' << "Год: ";
+				cin >> cyear;
+				cout << endl;
+				find_car(info, size, cnumb, cmon, cyear);
+				cout << endl << endl;
+				break;
+			case 0:
+				a = 0;
+				break;
+			default:
+				cout << endl << '\t' << "Неверно введена команда" << endl;
+			}
+		}
+
+		///////////////////////////////////////////////
+
+		///////////////////////////////////////////////
+
+
+		//				ЗАПИСЬ В ФАЙЛ				//
+
+			fp = fopen(path, "w+");
+
+			fprintf(fp, "%d", size);
+			fprintf(fp, "\n");
+
+
+			for (i = 0; i < size; i++)
+			{
+				fprintf(fp, "%s %s %s %d %d %d %s %d \n ", info[i].mark,
+					info[i].fio.firstN,
+					info[i].fio.lastN,
+					info[i].pow,
+					info[i].mil,
+					info[i].date.numb,
+					info[i].date.mon,
+					info[i].date.year);
+			}
+
+		///////////////////////////////////////////////
+
+	}
+	system("pause");
+	return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
